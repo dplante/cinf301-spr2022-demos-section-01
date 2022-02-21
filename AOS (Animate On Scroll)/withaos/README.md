@@ -1,6 +1,7 @@
 # cinf301-spr2022-demos-section-01
 
-# Animate On Scroll Library Demo
+# Animate On Scroll Library Demo by Robby Manalo
+- Date: 2/16/2022
 - Source: https://github.com/michalsnik/aos
 - Example using "fade-up" aos animation
 
