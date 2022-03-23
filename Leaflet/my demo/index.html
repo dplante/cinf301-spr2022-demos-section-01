@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <!-- load in the library, all functions are available from L -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    </head>
+        <style>
+            #map {position: absolute; top: 0; bottom: 0; left: 0; right: 0;}
+        </style>
+    <body>
+        <div id ="map"></div>
+        <script>
+            //initial view of the map
+            var map = L.map('map').setView([0, 0], 1);
+
+            //this is where the tiles of the map come from
+            L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=0HnnLWLFSm7Kq5eQAlo7').addTo(map);
+
+            //extend the icon class to create multiple icons
+            var iconClass = L.Icon.extend ({
+                options: {
+                //iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
+                //shadowUrl:'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+                iconSize: [38, 95],
+                iconAnchor: [22, 94],
+                //shadowAnchor: [4, 62],
+                popupAnchor: [12, -90]
+                }
+            })
+
+            var icon1 = new iconClass({iconUrl:'symbol.svg'});
+            var icon2 = new iconClass({iconUrl:'symbol2.png'});
+            var icon3 = new iconClass({iconUrl:'symbol3.jpg'});
+
+
+            var marker1 = L.marker([51.5, -0.08], {icon:icon1}).addTo(map);
+            var marker1 = L.marker([51.5, -0.09], {icon:icon2}).addTo(map);
+            var marker1 = L.marker([51.5, -0.10], {icon:icon3}).addTo(map);
+
+            var circle = L.circle([50, 30], {
+                color: 'red',
+                fillcolor: 'red',
+                fillOpacity: 0.5,
+                radius: 50000
+            }).addTo(map);
+            circle.bindPopup("what a nice circle");
+
+            var polygoncoordinates = [[37, -109.05],[41, -109.03],[41, -102.05],[37, -102.04]];
+            var polygon = L.polygon(polygoncoordinates, {color: 'red'}).addTo(map);
+            polygon.bindPopup("<b> this popup displays itself automatically").openPopup();
+            
+            L.control.scale({
+                metric: true,
+                imperial: true,
+                position: 'topright'
+            }).addTo(map);
+
+            //Instead of JSON, maps use GeoJSON
+            var myGeoJSON = { "type": "FeatureCollection",
+            "features": [
+              { "type": "Feature",
+                "geometry": {"type": "Point", "coordinates": [102.0, 0.5]},
+                "properties": {"prop0": "value0"}
+                },
+              { "type": "Feature",
+                "geometry": {
+                  "type": "LineString",
+                  "coordinates": [
+                    [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
+                    ]
+                  },
+                "properties": {
+                  "prop0": "value0",
+                  "prop1": 0.0
+                  }
+                },
+              { "type": "Feature",
+                 "geometry": {
+                   "type": "Polygon",
+                   "coordinates": [
+                     [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0],
+                       [100.0, 1.0], [100.0, 0.0] ]
+                     ]
+                
+                 },
+                 "properties": {
+                   "prop0": "value0",
+                   "prop1": {"this": "that"}
+                   }
+                 }
+              ]
+            }
+            L.geoJSON(myGeoJSON).addTo(map);
+        </script>
+    </body>
+</html>
