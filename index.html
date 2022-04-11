@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Fullscreen demo</title>
+  </head>
+  <body>
+    <h2>Fullscreen Demo !</h2>
+    <ul class="tsummary">
+      <li>Use a javascript to a webpage full screen</li>
+    </ul>
+
+    <script>
+      function getFullscreenElement() {
+        return (
+          document.fullscreenElement ||
+          document.webkitFullscreen ||
+          document.msFullscreen
+        );
+      }
+
+      function toggleFullscreen() {
+        if (getFullscreenElement()) {
+          document.exitFullscreen();
+        } else {
+          document.documentElement.requestFullscreen().catch(console.log);
+        }
+      }
+      document.addEventListener("dblclick", () => {
+        toggleFullscreen();
+      });
+    </script>
+  </body>
+</html>
